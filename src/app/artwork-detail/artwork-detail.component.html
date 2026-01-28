@@ -1,0 +1,125 @@
+<!-- src/app/works/artwork-detail.component.html -->
+<div class="art-detail" role="main" *ngIf="artwork">
+    <div class="constrain">
+      <nav class="detail-top">
+        <button class="link-back" (click)="goBack()" aria-label="Back to exhibit">
+            <div>←</div>
+            <div>Back to Exhibit</div>
+        </button>
+  
+        <!-- <div class="detail-nav">
+          <button class="nav-btn" (click)="prev()" aria-label="Previous artwork">‹</button>
+          <button class="nav-btn" (click)="next()" aria-label="Next artwork">›</button>
+        </div> -->
+        <!-- Magnifier toggle -->
+        <button
+        class="btn-outline magnifier-toggle"
+        [class.active]="magnifierEnabled"
+        (click)="toggleMagnifier($event)"
+        [attr.aria-pressed]="magnifierEnabled"
+        title="Toggle magnifier"
+        >
+            🔍 {{ magnifierEnabled ? 'Magnifier On' : 'Magnifier Off' }}
+        </button>
+
+
+      </nav>
+  
+      <section class="detail-grid">
+        <figure class="detail-media">
+          <!-- If artwork.video exists, show video element -->
+          <ng-container *ngIf="artwork.video; else imageBlock">
+            <video controls [attr.poster]="artwork.thumb" class="media-video">
+              <source [src]="artwork.video" type="video/mp4" />
+              <!-- fallback image -->
+              <img [src]="artwork.image || artwork.thumb" [alt]="artwork.alt || artwork.title" />
+            </video>
+          </ng-container>
+  
+          <ng-template #imageBlock>
+            <!-- Zoom-enabled wrapper -->
+            <div class="zoom-wrap" *ngIf="artwork">
+                <img
+                #detailImg
+                class="media-image"
+                [src]="artwork.image || artwork.thumb"
+                [alt]="artwork.alt || artwork.title"
+                loading="lazy"
+                decoding="async"
+                (load)="onImageLoad()"
+              
+                (pointerdown)="magnifierEnabled && enablePointerZoom($event)"
+                (pointermove)="magnifierEnabled && onZoom($event)"
+                (pointerup)="magnifierEnabled && disableZoom()"
+                (pointercancel)="magnifierEnabled && disableZoom()"
+                (pointerleave)="magnifierEnabled && disableZoom()"
+              
+                tabindex="0"
+              />
+          
+              <div
+                class="zoom-lens"
+                [ngStyle]="zoomStyle"
+                aria-hidden="true"
+              ></div>
+            </div>
+          </ng-template>
+  
+          <!-- small metadata bar overlaid bottom-left -->
+          <!-- <figcaption class="media-caption">
+            <div class="caption-left">
+              <span class="title">{{ artwork.title }}</span>
+              <span class="meta-sub" *ngIf="artwork.year">— {{ artwork.year }}</span>
+            </div>
+            <div class="caption-right">
+              <button class="btn-outline" routerLink="/inquiries?art={{artwork.id}}">Inquire</button>
+            </div>
+          </figcaption> -->
+        </figure>
+  
+        <aside class="detail-info" aria-labelledby="art-title">
+          <h1 id="art-title">{{ artwork.title }}</h1>
+  
+          <p class="byline">
+            <span *ngIf="artwork.year">{{ artwork.year }}</span>
+            <span *ngIf="artwork.medium"> • {{ artwork.medium }}</span>
+            <span *ngIf="artwork.dimensions"> • {{ artwork.dimensions }}</span>
+          </p>
+  
+          <div class="writeup" *ngIf="artwork.description">
+            <h2>About the work</h2>
+            <p [innerHTML]="artwork.description"></p>
+          </div>
+  
+          <div class="detail-actions">
+            <div class="detail-nav">
+              <button class="nav-btn" (click)="prev()" aria-label="Previous artwork">‹</button>
+              <button class="nav-btn" (click)="next()" aria-label="Next artwork">›</button>
+            </div>
+
+            
+          
+            <div class="action-controls">
+              
+              <a class="link-text" href="#" (click)="goBack($event)">Back to Gallery</a>
+            </div>
+          </div>
+  
+          <div class="related">
+            <h3>Other works</h3>
+            <div class="thumb-row">
+              <button
+                *ngFor="let a of artworks; let i = index"
+                class="thumb"
+                (click)="openArtworkByIndex(i)"
+                [attr.aria-label]="'Open ' + a.title"
+              >
+                <img [src]="a.thumb" [alt]="a.alt || a.title" loading="lazy" />
+              </button>
+            </div>
+          </div>
+        </aside>
+      </section>
+    </div>
+</div>
+  

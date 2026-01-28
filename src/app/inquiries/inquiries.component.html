@@ -1,0 +1,82 @@
+<div class="inquiries-root" role="main">
+    <div class="constrain">
+      <section class="contact-info">
+        <h1>Contact & Inquiries</h1>
+        <p class="muted">For purchases, partnerships or other enquiries — reach out below or contact directly.</p>
+  
+        <div class="contact-cards">
+          <div class="card">
+            <div class="card-title">Email</div>
+            <a class="link-large" [href]="'mailto:' + contactEmail">{{ contactEmail }}</a>
+          </div>
+  
+          <div class="card">
+            <div class="card-title">Phone</div>
+            <a class="link-large" [href]="'tel:' + contactPhone">{{ contactPhone }}</a>
+          </div>
+        </div>
+      </section>
+  
+      <section class="form-section">
+        <div class="glass-panel form-panel">
+          <h2>Send an Inquiry via WhatsApp</h2>
+          <p class="muted">Fill the enquiry form and we’ll open WhatsApp chat with your message.</p>
+  
+          <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate class="inquiry-form">
+            <div class="row">
+              <label>
+                <span class="label-text">Name</span>
+                <input formControlName="name" type="text" placeholder="Your full name" />
+                <div class="err" *ngIf="form.get('name')?.touched && form.get('name')?.invalid">
+                  <small *ngIf="form.get('name')?.hasError('required')">Name is required.</small>
+                  <small *ngIf="form.get('name')?.hasError('minlength')">Please enter at least 2 characters.</small>
+                </div>
+              </label>
+  
+              <label>
+                <span class="label-text">City</span>
+                <input formControlName="city" type="text" placeholder="City" />
+                <div class="err" *ngIf="form.get('city')?.touched && form.get('city')?.invalid">
+                  <small *ngIf="form.get('city')?.hasError('required')">City is required.</small>
+                </div>
+              </label>
+            </div>
+  
+            <div class="row">
+              <label class="full">
+                <span class="label-text">Contact number</span>
+                <input formControlName="contact" type="tel" placeholder="+91 555 123 4567" />
+                <div class="err" *ngIf="form.get('contact')?.touched && form.get('contact')?.invalid">
+                  <small *ngIf="form.get('contact')?.hasError('required')">Contact number is required.</small>
+                  <small *ngIf="form.get('contact')?.hasError('pattern')">Please enter a valid phone number.</small>
+                </div>
+              </label>
+            </div>
+  
+            <div class="row">
+              <label>
+                <span class="label-text">Reason</span>
+                <select formControlName="reason">
+                  <option *ngFor="let r of reasons" [value]="r.value">{{ r.label }}</option>
+                </select>
+              </label>
+  
+              <label>
+                <span class="label-text">Optional message</span>
+                <input formControlName="message" type="text" placeholder="Any additional details" />
+              </label>
+            </div>
+  
+            <div class="form-actions">
+              <button class="btn btn-primary" [class.is-disabled]="form.invalid || sending" type="submit" [disabled]="form.invalid || sending">
+                {{ sending ? 'Opening WhatsApp...' : 'Send via WhatsApp' }}
+              </button>
+  
+              <button class="btn btn-outline" type="button" (click)="form.reset({ reason:'purchase' })">Reset</button>
+            </div>
+          </form>
+        </div>
+      </section>
+    </div>
+</div>
+  

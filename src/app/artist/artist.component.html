@@ -1,0 +1,19 @@
+<div class="artist-root" role="main">
+    <div class="artist-constrain">
+      <section class="artist-split" aria-labelledby="artist-heading">
+        <div class="artist-portrait" role="img" [attr.aria-label]="'Portrait of ' + 'Artist Name'">
+          <img [src]="portrait" alt="Artist portrait" />
+        </div>
+  
+        <div class="artist-copy">
+          <div [innerHTML]="writeupHtml"></div>
+  
+          <div class="artist-actions">
+            <a class="btn btn-primary" routerLink="/works">View Works</a>
+            <a class="btn btn-outline" routerLink="/inquiries">Contact</a>
+          </div>
+        </div>
+      </section>
+    </div>
+</div>
+  

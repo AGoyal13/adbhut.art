@@ -1,0 +1,311 @@
+/* Landing / hero - the section itself will be constrained by main > *,
+   but this section uses internal layout spacing and a preview that can
+   be full-bleed if desired. */
+   .hero {
+    min-height: calc(100vh - 180px);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:var(--text);
+    /* background: linear-gradient(180deg, rgba(5,4,6,1) 0%, rgba(10,10,11,0.96) 40%, rgba(10,10,11,0.96) 100%); */
+  }
+  
+  /* Use an internal grid; width is 100% of constrained main area */
+  .hero-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    align-items: center;
+    width: 100%;
+    max-width: var(--max-width);
+    box-sizing: border-box;
+  }
+  .center-align {
+    align-items: center;
+  }
+  
+  /* copy */
+  .hero-copy { max-width: 720px; }
+  .hero-title {
+    /* font-family: "Playfair Display", serif; */
+    font-size: clamp(28px, 5vw, 48px);
+    margin:0 0 14px 0;
+    letter-spacing:0.02em;
+    line-height:1.04;
+    color:var(--text);
+  }
+  .hero-ctas {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+    justify-content: center;
+  }
+  .hero-sub {
+    color:var(--muted-text);
+    margin:0 0 22px 0;
+    font-size:16px;
+    line-height:1.6;
+    text-align: center;
+  }
+  
+  /* CTA buttons */
+  .btn {
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    padding:10px 14px;
+    border-radius:8px;
+    font-weight:600;
+    cursor:pointer;
+    text-decoration:none;
+  }
+  .btn-primary {
+    background: linear-gradient(180deg, var(--accent), #9b7bff);
+    color:#111;
+    border: none;
+  }
+  .btn-outline {
+    border: 1px solid rgba(255,255,255,0.06);
+    color:var(--text);
+    background:transparent;
+    padding:10px 12px;
+  }
+  
+  /* Preview frame (keeps fixed size inside constrained layout) */
+  .hero-preview { display:flex; flex-direction:column; gap:12px; align-items:center; justify-content:center; }
+  
+  .preview-frame {
+    width:420px;
+    height:320px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border-radius:12px;
+    padding:12px;
+    box-shadow: 0 8px 28px rgba(0,0,0,0.6);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    position:relative;
+    overflow:hidden;
+    border:1px solid rgba(255,255,255,0.03);
+  }
+  
+  /* nav arrows */
+  .preview-nav {
+    background:transparent;
+    color:var(--text);
+    border:0;
+    font-size:28px;
+    width:48px;
+    height:48px;
+    display:inline-grid;
+    place-items:center;
+    cursor:pointer;
+    opacity:0.85;
+  }
+  .preview-nav:hover { transform:translateY(-2px); }
+  
+  /* scroller */
+  .preview-stage {
+    flex:1;
+    overflow:hidden;
+    height:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:8px 10px;
+  }
+  .preview-list {
+    display:flex;
+    gap:12px;
+    transition: transform 360ms cubic-bezier(.2,.9,.25,1);
+    align-items:center;
+    height:100%;
+    width:100%;
+  }
+  .preview-item {
+    min-width: 100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    height:100%;
+  }
+  .art-thumb {
+    display:block;
+    width:100%;
+    height:100%;
+    border-radius:8px;
+    overflow:hidden;
+    text-align:left;
+    background:var(--panel);
+    border:1px solid rgba(255,255,255,0.02);
+    cursor:pointer;
+  }
+  .art-thumb img {
+    width:100%;
+    height:76%;
+    object-fit:cover;
+    display:block;
+  }
+  .art-caption {
+    padding:8px 12px;
+    color:var(--muted-text);
+    font-size:13px;
+  }
+  
+  /* indicators */
+  .preview-indicators { display:flex; gap:8px; margin-top:6px; }
+  .dot {
+    display:inline-block;
+    width:8px;
+    height:8px;
+    border-radius:50%;
+    background:rgba(255,255,255,0.06);
+    cursor:pointer;
+  }
+  .dot.active { background:var(--accent); }
+  
+  /* small screens: stack layout */
+  @media (max-width: 940px) {
+    .hero-inner { grid-template-columns: 1fr; grid-auto-rows:auto; gap:10px; }
+    .hero-preview { order: -1; align-self:center; }
+    .preview-frame { width:92vw; height:260px; }
+  }
+  @media (max-width: 480px) {
+    .hero-ctas {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+    }
+  
+    .hero-ctas .btn {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
+
+
+
+  /* carousel basics */
+.preview-frame {
+    width: 420px;
+    height: 320px;
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    box-shadow: 0 12px 40px rgba(0,0,0,0.55);
+  }
+  
+  /* track holds items side-by-side */
+  .preview-track {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    transition: transform 420ms cubic-bezier(.2,.9,.25,1);
+    will-change: transform;
+  }
+  
+  /* each slide */
+  .preview-item {
+    min-width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* background: var(--panel); */
+  }
+  .preview-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display:block;
+  }
+  
+  /* nav arrows (inside frame) */
+  .preview-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255,255,255,0.02);
+    border: 0;
+    color: var(--text);
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+    transition: transform 160ms ease, background 160ms ease;
+  }
+  .preview-nav:hover { transform: translateY(-50%) translateY(-4px); background: rgba(255,255,255,0.04); }
+  .preview-nav.prev { left: 12px; }
+  .preview-nav.next { right: 12px; }
+  
+  /* indicators */
+  .preview-indicators {
+    display:flex;
+    gap: 8px;
+    margin-top: 10px;
+    justify-content:center;
+  }
+  .dot {
+    width: 10px;
+    height: 10px;
+    border-radius:50%;
+    background: rgba(255,255,255,0.06);
+    border: 0;
+    cursor: pointer;
+    transition: transform 160ms ease, background 160ms ease;
+  }
+  .dot.active { background: var(--accent); transform: scale(1.12); }
+  
+  /* small screens */
+  @media (max-width: 940px) {
+    .preview-frame { width: 92vw; height: 260px; }
+  }
+  
+  /* accessibility focus */
+  .preview-nav:focus, .dot:focus {
+    outline: 3px solid rgba(110,240,255,0.12);
+    outline-offset: 6px;
+    border-radius: 8px;
+  }
+  
+  /* optional: reduce motion preference */
+  @media (prefers-reduced-motion: reduce) {
+    .preview-track { transition: none; }
+    .preview-nav, .dot { transition: none; }
+  }
+  figure {
+    margin: 0;
+  }
+  
+  app-works-carrousel {
+    --card-w: 350px;    /* larger card in hero */
+    --card-h: 420px;
+    --carousel-max-w: 980px;
+  }
+  
+  .carousel-block {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(var(--card-h, 360px) + (var(--carousel-padding, 20px) * 2));
+    box-sizing: border-box;
+  }
+
+  @media (max-width: 520px) {
+    app-works-carrousel {
+        --card-w: 250px;    /* larger card in hero */
+        --card-h: 300px;
+        --carousel-max-w: 980px;
+    }
+    .carousel-block {
+        min-height: calc(300px +  (20px * 2));
+    }
+  }

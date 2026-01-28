@@ -1,0 +1,37 @@
+<section class="carousel-wrap" aria-roledescription="3d carousel" aria-label="Exhibit carousel">
+  
+    <div class="carousel-stage-outer">
+      <div
+        #carouselStage
+        class="carousel-stage"
+        (pointerdown)="onPointerDown($event)"
+        (pointermove)="onPointerMove($event)"
+        (pointerup)="onPointerUp($event)"
+        (pointercancel)="onPointerCancel()"
+        (pointerleave)="onPointerCancel()"
+        tabindex="0"
+        aria-live="polite"
+      >
+        <div
+          class="slide card"
+          *ngFor="let art of artworks; let i = index"
+          #slideEl
+          (click)="openArtwork(art)"
+          [attr.aria-hidden]="!isActive(i)"
+          [attr.data-index]="i"
+        >
+          <img [src]="art.image || art.thumb" [alt]="art.alt || art.title" loading="lazy" decoding="async" />
+  
+          <div class="glass">
+            <div class="glass-inner">
+              <div class="meta">
+                <div class="title">{{ art.title }}</div>
+                <div class="meta-sub">{{ art.year ? art.year : '' }} <span *ngIf="art.medium"> • {{ art.medium }}</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  

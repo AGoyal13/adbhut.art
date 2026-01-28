@@ -1,0 +1,37 @@
+<!-- src/app/works/works.component.html -->
+<section class="works" aria-labelledby="works-title">
+    <div class="constrain">
+      <header class="works-header">
+        <h2 id="works-title">Gallery</h2>
+        <p class="works-lead">A curated selection of hand-painted works. Click any tile to view full details and the story behind the piece.</p>
+      </header>
+  
+      <main class="gallery" role="list" aria-live="polite">
+        <article
+          class="card"
+          role="listitem"
+          *ngFor="let art of artworks"
+          tabindex="0"
+          (click)="openArtwork(art)"
+          (keydown)="onCardKeydown($event, art)"
+          [attr.aria-label]="art.title + (art.year ? ', ' + art.year : '')"
+        >
+          <div class="card-media" aria-hidden="true">
+            <img [src]="art.thumb" [alt]="art.alt || art.title" loading="lazy" decoding="async" />
+          </div>
+  
+          <!-- glass overlay -->
+          <div class="card-glass" aria-hidden="true">
+            <div class="glass-inner">
+              <div class="meta">
+                <div class="card-title">{{ art.title }}</div>
+                <div class="card-year" *ngIf="art.year">{{ art.year }}</div>
+              </div>
+              <div class="chev" aria-hidden="true">›</div>
+            </div>
+          </div>
+        </article>
+      </main>
+    </div>
+  </section>
+  
